@@ -17,8 +17,8 @@ data class WeatherCacheEntity(
     @ColumnInfo(name = "lat")
     var lat: Double? = null,
 
-    @ColumnInfo(name = "cloudsdescription")
-    var cloudsdescription: String? = null,
+    @ColumnInfo(name = "cloudsDescription")
+    var cloudsDescription: String? = null,
 
     @ColumnInfo(name = "temp")
     var temp: Double? = null,
@@ -42,13 +42,19 @@ data class WeatherCacheEntity(
     var windSpeed: Double? = null,
 
     @ColumnInfo(name = "sunrise")
-    var sunrise: Int? = null,
+    var sunrise: Long? = null,
 
     @ColumnInfo(name = "sunset")
-    var sunset: Int? = null,
+    var sunset: Long? = null,
 
     @ColumnInfo(name = "cityName")
     var cityName: String? = null,
+
+    @ColumnInfo(name = "country")
+    var country: String? = null,
+
+    @ColumnInfo(name = "dateTime")
+    var dateTime: Long? = null,
 
     @ColumnInfo(name = "isFavourite")
     var isFavourite: Boolean = false

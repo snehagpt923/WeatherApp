@@ -3,9 +3,15 @@
     <string name="unknown_error">Unknown error.</string>
     <string name="query_hint">Enter City Name</string>
     <string name="empty_search_msg">Enter City Name to check weather</string>
-    <string name="min_temp">Min Temperature = %s</string>
-    <string name="max_temp">Max Temperature = %s</string>
-    <string name="temperature">Temperature = %s</string>
-    <string name="feels_like">Feels like temperature = %s</string>
+    <string name="min_temp">%s\nMin</string>
+    <string name="max_temp">%s\nMax</string>
+    <string name="lat_long">(%s, %s)</string>
+    <string name="feels_like">Feels like %s</string>
     <string name="no_data_found">No Data Found for city %s</string>
+    <string name="humidity">HUMIDITY\n%s</string>
+    <string name="pressure">PRESSURE\n%s hPa</string>
+    <string name="clouds_description">Clouds: %s</string>
+    <string name="sunrise">Sunrise at\n%s</string>
+    <string name="sunset">Sunset at\n%s</string>
+    <string name="wind_speed">%s km/h</string>
 </resources>

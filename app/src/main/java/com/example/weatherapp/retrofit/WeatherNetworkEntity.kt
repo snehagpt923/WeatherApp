@@ -34,7 +34,7 @@ data class WeatherNetworkEntity(
 
     @SerializedName("dt")
     @Expose
-    var dt: Int? = null,
+    var dt: Long? = null,
 
     @SerializedName("sys")
     @Expose

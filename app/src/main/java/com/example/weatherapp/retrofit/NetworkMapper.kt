@@ -11,7 +11,7 @@ class NetworkMapper
             id = entity.id,
             lon = entity.coord?.lon,
             lat = entity.coord?.lat,
-            cloudsdescription = entity.weather?.get(0)?.description,
+            cloudsDescription = entity.weather?.get(0)?.description,
             temp = entity.main?.temp,
             feelsLike = entity.main?.feelsLike,
             tempMin = entity.main?.tempMin,
@@ -21,7 +21,9 @@ class NetworkMapper
             windSpeed = entity.wind?.speed,
             sunrise = entity.sys?.sunrise,
             sunset = entity.sys?.sunset,
-            cityName = entity.name
+            cityName = entity.name,
+            country = entity.sys?.country,
+            dateTime = entity.dt
         )
     }
 

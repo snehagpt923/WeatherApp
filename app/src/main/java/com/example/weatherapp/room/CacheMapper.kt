@@ -11,7 +11,7 @@ class CacheMapper
             id = entity.id,
             lon = entity.lon,
             lat = entity.lat,
-            cloudsdescription = entity.cloudsdescription,
+            cloudsDescription = entity.cloudsDescription,
             temp = entity.temp,
             feelsLike = entity.feelsLike,
             tempMin = entity.tempMin,
@@ -22,6 +22,8 @@ class CacheMapper
             sunrise = entity.sunrise,
             sunset = entity.sunset,
             cityName = entity.cityName,
+            country = entity.country,
+            dateTime = entity.dateTime,
             isFavourite = entity.isFavourite
         )
     }
@@ -31,7 +33,7 @@ class CacheMapper
             id = domainModel.id,
             lon = domainModel.lon,
             lat = domainModel.lat,
-            cloudsdescription = domainModel.cloudsdescription,
+            cloudsDescription = domainModel.cloudsDescription,
             temp = domainModel.temp,
             feelsLike = domainModel.feelsLike,
             tempMin = domainModel.tempMin,
@@ -42,6 +44,8 @@ class CacheMapper
             sunrise = domainModel.sunrise,
             sunset = domainModel.sunset,
             cityName = domainModel.cityName,
+            country = domainModel.country,
+            dateTime = domainModel.dateTime,
             isFavourite = false
         )
     }

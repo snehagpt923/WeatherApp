@@ -8,7 +8,7 @@ data class WeatherData(
 
     var lat: Double? = null,
 
-    var cloudsdescription: String? = null,
+    var cloudsDescription: String? = null,
 
     var temp: Double? = null,
 
@@ -24,11 +24,15 @@ data class WeatherData(
 
     var windSpeed: Double? = null,
 
-    var sunrise: Int? = null,
+    var sunrise: Long? = null,
 
-    var sunset: Int? = null,
+    var sunset: Long? = null,
 
     var cityName: String? = null,
+
+    var country: String? = null,
+
+    var dateTime: Long? = null,
 
     var isFavourite: Boolean = false
 )
