@@ -1,36 +1,47 @@
 package com.example.weatherapp.repository
 
-import com.example.weatherapp.model.Blog
-import com.example.weatherapp.retrofit.BlogRetrofit
+import android.content.Context
+import com.example.weatherapp.R
+import com.example.weatherapp.model.WeatherData
 import com.example.weatherapp.retrofit.NetworkMapper
-import com.example.weatherapp.room.BlogDao
+import com.example.weatherapp.retrofit.WeatherRetrofit
 import com.example.weatherapp.room.CacheMapper
+import com.example.weatherapp.room.WeatherDao
 import com.example.weatherapp.util.DataState
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import java.lang.Exception
+import com.example.weatherapp.util.Utility
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class MainRepository
 constructor(
-    private val blogDao: BlogDao,
-    private val blogRetrofit: BlogRetrofit,
+    private val weatherDao: WeatherDao,
+    private val weatherRetrofit: WeatherRetrofit,
     private val cacheMapper: CacheMapper,
-    private val networkMapper: NetworkMapper
+    private val networkMapper: NetworkMapper,
+    private val context: Context
 ) {
-    suspend fun getBlogs(): Flow<DataState<List<Blog>>> = flow {
+    suspend fun getCityWeather(cityName: String): Flow<DataState<WeatherData>> = flow {
         emit(DataState.Loading)
-        delay(1000)
         try {
-            val networkBlogs = blogRetrofit.get()
-            val blogs = networkMapper.mapFromEntityList(networkBlogs)
-            for (blog in blogs) {
-                blogDao.insert(cacheMapper.mapToEntity(blog))
+            if (Utility.isNetworkAvailable(context)) {
+                val weatherNetworkData = weatherRetrofit.getWeatherData(cityName, Utility.APP_ID)
+                val weatherData = networkMapper.mapFromEntity(weatherNetworkData)
+                val isFavouriteMarked = weatherDao.isFavourite(cityName) ?: false
+                weatherDao.insert(cacheMapper.mapToEntity(weatherData))
+                markFavourite(isFavouriteMarked, cityName)
             }
-            val cachedBlogs = blogDao.get()
-            emit(DataState.Success(cacheMapper.mapFromEntityList(cachedBlogs)))
+            val cachedWeatherData = weatherDao.get(cityName)
+            if (cachedWeatherData != null) {
+                emit(DataState.Success(cacheMapper.mapFromEntity(cachedWeatherData)))
+            } else {
+                emit(DataState.Error(Exception(String.format(context.getString(R.string.no_data_found), cityName))))
+            }
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }
+    }
+
+    suspend fun markFavourite(isFavourite: Boolean, cityName: String) {
+        weatherDao.markFavourite(isFavourite, cityName)
     }
 }

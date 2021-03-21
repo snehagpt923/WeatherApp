@@ -1,6 +1,7 @@
 package com.example.weatherapp.di
 
-import com.example.weatherapp.retrofit.BlogRetrofit
+import com.example.weatherapp.retrofit.WeatherRetrofit
+import com.example.weatherapp.util.Utility
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -9,7 +10,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -28,15 +28,15 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(gson: Gson): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl("https://open-api.xyz/placeholder/")
+            .baseUrl(Utility.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
     }
 
     @Singleton
     @Provides
-    fun provideService(retrofit: Retrofit.Builder): BlogRetrofit {
+    fun provideService(retrofit: Retrofit.Builder): WeatherRetrofit {
         return retrofit
             .build()
-            .create(BlogRetrofit::class.java)
+            .create(WeatherRetrofit::class.java)
     }
 }

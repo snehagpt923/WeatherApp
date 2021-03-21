@@ -2,9 +2,8 @@ package com.example.weatherapp.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.weatherapp.room.BlogDao
-import com.example.weatherapp.room.BlogDatabase
+import com.example.weatherapp.room.WeatherDao
+import com.example.weatherapp.room.WeatherDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,15 +17,17 @@ object RoomModule {
 
     @Singleton
     @Provides
-    fun provideBlogDb(@ApplicationContext context: Context): BlogDatabase {
-        return Room.databaseBuilder(context, BlogDatabase::class.java, BlogDatabase.DATABASE_NAME)
-            .fallbackToDestructiveMigration().build()
-
+    fun provideWeatherDb(@ApplicationContext context: Context): WeatherDatabase {
+        return Room.databaseBuilder(
+            context,
+            WeatherDatabase::class.java,
+            WeatherDatabase.DATABASE_NAME
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Singleton
     @Provides
-    fun provideBlogDao(blogDatabase: BlogDatabase):BlogDao {
-        return blogDatabase.blogDao()
+    fun provideWeatherDao(weatherDatabase: WeatherDatabase): WeatherDao {
+        return weatherDatabase.weatherDao()
     }
 }

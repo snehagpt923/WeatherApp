@@ -1,32 +1,31 @@
 package com.example.weatherapp.retrofit
 
-import com.example.weatherapp.model.Blog
+import com.example.weatherapp.model.WeatherData
 import com.example.weatherapp.util.EntityMapper
 import javax.inject.Inject
 
 class NetworkMapper
-@Inject constructor() : EntityMapper<BlogNetworkEntity, Blog> {
-    override fun mapFromEntity(entity: BlogNetworkEntity): Blog {
-        return Blog(
+@Inject constructor() : EntityMapper<WeatherNetworkEntity, WeatherData> {
+    override fun mapFromEntity(entity: WeatherNetworkEntity): WeatherData {
+        return WeatherData(
             id = entity.id,
-            title = entity.title,
-            body = entity.body,
-            image = entity.image,
-            category = entity.category
+            lon = entity.coord?.lon,
+            lat = entity.coord?.lat,
+            cloudsdescription = entity.weather?.get(0)?.description,
+            temp = entity.main?.temp,
+            feelsLike = entity.main?.feelsLike,
+            tempMin = entity.main?.tempMin,
+            tempMax = entity.main?.tempMax,
+            pressure = entity.main?.pressure,
+            humidity = entity.main?.humidity,
+            windSpeed = entity.wind?.speed,
+            sunrise = entity.sys?.sunrise,
+            sunset = entity.sys?.sunset,
+            cityName = entity.name
         )
     }
 
-    override fun mapToEntity(domainModel: Blog): BlogNetworkEntity {
-        return BlogNetworkEntity(
-            id = domainModel.id,
-            title = domainModel.title,
-            body = domainModel.body,
-            image = domainModel.image,
-            category = domainModel.category
-        )
-    }
-
-    fun mapFromEntityList(entities: List<BlogNetworkEntity>): List<Blog> {
-        return entities.map { mapFromEntity(it) }
+    override fun mapToEntity(domainModel: WeatherData): WeatherNetworkEntity {
+        return WeatherNetworkEntity()
     }
 }

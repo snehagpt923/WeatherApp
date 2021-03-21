@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.weatherapp.model.Blog
+import com.example.weatherapp.model.WeatherData
 import com.example.weatherapp.repository.MainRepository
 import com.example.weatherapp.util.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,17 +18,22 @@ class MainViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
 
-    private val blogsLiveData: MutableLiveData<DataState<List<Blog>>> = MutableLiveData()
+    private val weatherLiveData: MutableLiveData<DataState<WeatherData>> = MutableLiveData()
 
-    val getBlogsLiveData: LiveData<DataState<List<Blog>>>
-        get() = blogsLiveData
+    val getWeatherLiveData: LiveData<DataState<WeatherData>>
+        get() = weatherLiveData
 
-    fun getBlogsFromServer() {
+    fun getCityWeather(cityName: String) {
         viewModelScope.launch {
-            mainRepository.getBlogs().onEach { blogs ->
-                blogsLiveData.value = blogs
+            mainRepository.getCityWeather(cityName).onEach {
+                weatherLiveData.value = it
             }.launchIn(viewModelScope)
         }
     }
 
+    fun markCityAsFavourite(isFavourite: Boolean, cityName: String) {
+        viewModelScope.launch {
+            mainRepository.markFavourite(isFavourite, cityName)
+        }
+    }
 }
